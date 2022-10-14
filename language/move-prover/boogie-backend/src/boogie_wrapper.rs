@@ -119,6 +119,7 @@ impl<'env> BoogieWrapper<'env> {
         let args = self.options.get_boogie_command(boogie_file)?;
         info!("running solver");
         debug!("command line: {}", args.iter().join(" "));
+        println!("command line: {}", args.iter().join(" "));
         let task = RunBoogieWithSeeds {
             options: self.options.clone(),
             boogie_file: boogie_file.to_string(),
