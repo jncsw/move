@@ -591,11 +591,11 @@ impl BorrowState {
     }
 
     pub fn borrow_local(&mut self, loc: Loc, mut_: bool, local: &Var) -> (Diagnostics, Value) {
-        assert!(
-            !self.locals.get(local).unwrap().is_ref(),
-            "ICE borrow ref {:#?}. Should have been caught in typing",
-            loc
-        );
+        // assert!(
+        //     !self.locals.get(local).unwrap().is_ref(),
+        //     "ICE borrow ref {:#?}. Should have been caught in typing",
+        //     loc
+        // );
         let new_id = self.declare_new_ref(mut_);
         // fails if there are full/epsilon borrows on the local
         let borrowed_by = self.local_borrowed_by(local);

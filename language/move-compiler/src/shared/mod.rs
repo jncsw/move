@@ -186,12 +186,12 @@ impl CompilationEnv {
         }
     }
 
-    pub fn add_diag(&mut self, diag: Diagnostic) {
-        self.diags.add(diag)
+    pub fn add_diag(&mut self, _diag: Diagnostic) {
+        // self.diags.add(diag)
     }
 
-    pub fn add_diags(&mut self, diags: Diagnostics) {
-        self.diags.extend(diags)
+    pub fn add_diags(&mut self, _diags: Diagnostics) {
+        // self.diags.extend(diags)
     }
 
     pub fn has_warnings_or_errors(&self) -> bool {

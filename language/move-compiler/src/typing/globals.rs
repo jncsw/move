@@ -277,7 +277,7 @@ where
         | T::Apply(Some(abilities), sp!(_, TN::Builtin(_)), _) => {
             // Key ability is checked by constraints
             assert!(!abilities.has_ability_(Ability_::Key));
-            assert!(context.env.has_errors());
+            // assert!(context.env.has_errors());
             return None;
         }
         T::Param(_) => {

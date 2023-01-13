@@ -208,6 +208,7 @@ impl<'a> Compiler<'a> {
             compiled_module_named_address_mapping,
             flags,
         } = self;
+        println!("move compiler run");
         generate_interface_files_for_deps(
             &mut deps,
             interface_files_dir_opt,

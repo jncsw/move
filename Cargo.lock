@@ -6456,6 +6456,52 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b5a972e5669d67ba988ce3dc826706fb0a8b01471c088cb0b6110b805cc36aed"
 
 [[package]]
+name = "vmove"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "bcs",
+ "clap 3.1.8",
+ "codespan-reporting",
+ "colored",
+ "difference",
+ "itertools 0.10.1",
+ "move-binary-format",
+ "move-bytecode-source-map",
+ "move-bytecode-utils",
+ "move-bytecode-verifier",
+ "move-bytecode-viewer",
+ "move-command-line-common",
+ "move-compiler",
+ "move-core-types",
+ "move-coverage",
+ "move-disassembler",
+ "move-docgen",
+ "move-errmapgen",
+ "move-ir-types",
+ "move-package",
+ "move-prover",
+ "move-resource-viewer",
+ "move-stdlib",
+ "move-symbol-pool",
+ "move-table-extension",
+ "move-unit-test",
+ "move-vm-runtime",
+ "move-vm-test-utils",
+ "move-vm-types",
+ "once_cell",
+ "read-write-set",
+ "read-write-set-dynamic",
+ "reqwest",
+ "serde 1.0.145",
+ "serde_json",
+ "serde_yaml",
+ "tempfile",
+ "toml_edit",
+ "walkdir",
+]
+
+[[package]]
 name = "vte"
 version = "0.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

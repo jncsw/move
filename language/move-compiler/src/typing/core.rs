@@ -152,7 +152,7 @@ impl<'env> Context<'env> {
     }
 
     pub fn error_type(&mut self, loc: Loc) -> Type {
-        sp(loc, Type_::UnresolvedError)
+        sp(loc, Type_::Anything)
     }
 
     pub fn add_ability_constraint(

@@ -754,7 +754,9 @@ fn struct_definition_name_base(
             context.struct_definition_name(&m, s),
             base_types(context, tys),
         ),
-        _ => panic!("ICE expected module struct type"),
+        _ => {
+            panic!("ICE expected module struct type")
+        }
     }
 }
 

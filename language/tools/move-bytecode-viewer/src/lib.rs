@@ -54,6 +54,8 @@ impl BytecodeViewerConfig {
         let compiled_module = CompiledModule::deserialize(&bytecode_bytes)
             .expect("Module blob can't be deserialized");
 
+        println!("source_map: {:?}", source_map_from_file(&self.module_sourcemap_path));
+
         let source_map = source_map_from_file(&self.module_sourcemap_path).unwrap();
 
         let source_path = Path::new(&self.source_file_path);

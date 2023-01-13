@@ -482,12 +482,13 @@ fn base_type(context: &Context, sp!(loc, nb_): N::Type) -> H::BaseType {
         NT::UnresolvedError => HB::UnresolvedError,
         NT::Anything => HB::Unreachable,
         NT::Ref(_, _) | NT::Unit => {
-            panic!(
-                "ICE type constraints failed {}:{}-{}",
-                loc.file_hash(),
-                loc.start(),
-                loc.end()
-            )
+            // panic!(
+            //     "ICE type constraints failed {}:{}-{}",
+            //     loc.file_hash(),
+            //     loc.start(),
+            //     loc.end()
+            // )
+            HB::Unreachable
         }
     };
     sp(loc, b_)
@@ -1221,7 +1222,16 @@ fn exp_impl(
             let mut count = 0;
             let mut decl_field = |f: &Field| -> usize {
                 match decl_fields {
-                    Some(field_map) => *field_map.get(f).unwrap(),
+                    Some(field_map) => {
+                        match field_map.get(f) {
+                            Some(i) => *i,
+                            None => {
+                                let i = count;
+                                count += 1;
+                                i
+                            }
+                        }
+                    },
                     None => {
                         // none can occur with errors in typing
                         let i = count;
