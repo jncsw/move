@@ -102,7 +102,7 @@ impl<'a> StackUsageVerifier<'a> {
                 return Err(PartialVMError::new(StatusCode::VALUE_STACK_OVERFLOW)
                     .at_code_offset(self.current_function(), block_start));
             }
-            println!("After code: {:#?} stack_size_increment: {}", code[i as usize], stack_size_increment);
+            // println!("After code: {:#?} stack_size_increment: {}", code[i as usize], stack_size_increment);
         }
 
         if stack_size_increment == 0 {
