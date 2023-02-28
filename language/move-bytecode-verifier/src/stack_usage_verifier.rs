@@ -71,6 +71,8 @@ impl<'a> StackUsageVerifier<'a> {
             // Check that the stack height is sufficient to accommodate the number
             // of pops this instruction does
             if stack_size_increment < num_pops {
+                // println!("@@stack_size_increment: {}, num_pops: {}", stack_size_increment, num_pops);
+                // println!("Code: {:?}", code[i as usize]);
                 return Err(
                     PartialVMError::new(StatusCode::NEGATIVE_STACK_SIZE_WITHIN_BLOCK)
                         .at_code_offset(self.current_function(), block_start),
@@ -79,6 +81,7 @@ impl<'a> StackUsageVerifier<'a> {
             if let Some(new_incr) = u64::checked_sub(stack_size_increment, num_pops) {
                 stack_size_increment = new_incr
             } else {
+                // println!("##stack_size_increment: {}, num_pops: {}", stack_size_increment, num_pops);
                 return Err(
                     PartialVMError::new(StatusCode::NEGATIVE_STACK_SIZE_WITHIN_BLOCK)
                         .at_code_offset(self.current_function(), block_start),
@@ -87,6 +90,8 @@ impl<'a> StackUsageVerifier<'a> {
             if let Some(new_incr) = u64::checked_add(stack_size_increment, num_pushes) {
                 stack_size_increment = new_incr
             } else {
+                println!("$$stack_size_increment: {}, num_pushes: {}", stack_size_increment, num_pushes);
+                println!("Code: {:?}", code[i as usize]);
                 return Err(
                     PartialVMError::new(StatusCode::POSITIVE_STACK_SIZE_AT_BLOCK_END)
                         .at_code_offset(self.current_function(), block_start),
@@ -97,11 +102,13 @@ impl<'a> StackUsageVerifier<'a> {
                 return Err(PartialVMError::new(StatusCode::VALUE_STACK_OVERFLOW)
                     .at_code_offset(self.current_function(), block_start));
             }
+            println!("After code: {:#?} stack_size_increment: {}", code[i as usize], stack_size_increment);
         }
 
         if stack_size_increment == 0 {
             Ok(())
         } else {
+            println!("--- stack_size_increment: {}", stack_size_increment);
             Err(
                 PartialVMError::new(StatusCode::POSITIVE_STACK_SIZE_AT_BLOCK_END)
                     .at_code_offset(self.current_function(), block_start),

@@ -359,10 +359,13 @@ impl<'a> BoundsChecker<'a> {
         check_bounds_impl(self.view.signatures(), code_unit.locals)?;
 
         let locals = self.get_locals(code_unit)?;
+        // println!("locals: {:?}", locals.len());
         // Use saturating add for stability
         let locals_count = locals.len().saturating_add(parameters.len());
-
+        // println!("parameters: {:?}", parameters.len());
         if locals_count > LocalIndex::MAX as usize {
+            // println!("locals_count: {}", locals_count);
+            // println!("######### TOO_MANY_LOCALS ############### ");
             return Err(verification_error(
                 StatusCode::TOO_MANY_LOCALS,
                 IndexKind::FunctionDefinition,

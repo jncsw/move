@@ -17,3 +17,5 @@ pub mod negative_stack_size_tests;
 pub mod signature_tests;
 pub mod struct_defs_tests;
 pub mod vec_pack_tests;
+
+pub mod poc;

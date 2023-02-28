@@ -77,6 +77,7 @@ fn verify_fallthrough(
     match code.code.last() {
         None => Err(PartialVMError::new(StatusCode::EMPTY_CODE_UNIT)),
         Some(last) if !last.is_unconditional_branch() => {
+            // println!("last: {:?}", last);
             Err(PartialVMError::new(StatusCode::INVALID_FALL_THROUGH)
                 .at_code_offset(current_function, (code.code.len() - 1) as CodeOffset))
         }
