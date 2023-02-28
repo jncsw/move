@@ -1979,6 +1979,12 @@ fn parse_function_decl(
                                 skip = true;
                             }
                         },
+                        Attribute_::Parameterized(n, _) => {
+                            if n.value.as_str() == "test" {
+                                // println!("attribute: {:?}", att);
+                                skip = true;
+                            }
+                        }
                         _ => {}
                     }
                 }
