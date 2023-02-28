@@ -1974,13 +1974,13 @@ fn parse_function_decl(
                 for att in attr.value.iter() {
                     match att.value {
                         Attribute_::Name(n) => {
-                            if n.value.as_str() == "test" {
+                            if n.value.as_str() == "test" || n.value.as_str() == "test_only" {
                                 // println!("attribute: {:?}", att);
                                 skip = true;
                             }
                         },
                         Attribute_::Parameterized(n, _) => {
-                            if n.value.as_str() == "test" {
+                            if n.value.as_str() == "test"  {
                                 // println!("attribute: {:?}", att);
                                 skip = true;
                             }
