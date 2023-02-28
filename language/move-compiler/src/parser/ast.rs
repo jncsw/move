@@ -1469,6 +1469,7 @@ impl AstDebug for Function {
         } = self;
         attributes.ast_debug(w);
         visibility.ast_debug(w);
+        // println!("entry: {:?}", entry); // not working here
         if entry.is_some() {
             w.write(&format!("{} ", ENTRY_MODIFIER));
         }

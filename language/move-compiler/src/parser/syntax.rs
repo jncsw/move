@@ -480,6 +480,7 @@ fn parse_module_member_modifiers(context: &mut Context) -> Result<Modifiers, Box
             Tok::Identifier if context.tokens.content() == ENTRY_MODIFIER => {
                 let loc = current_token_loc(context.tokens);
                 context.tokens.advance()?;
+                println!("entry loc: {:?}", loc);
                 if let Some(prev_loc) = mods.entry {
                     let msg = format!("Duplicate '{}' modifier", ENTRY_MODIFIER);
                     let prev_msg = format!("'{}' modifier previously given here", ENTRY_MODIFIER);
@@ -1965,6 +1966,20 @@ fn parse_function_decl(
         start_loc,
         context.tokens.previous_end_loc(),
     );
+    if entry.is_some() {
+        println!("===== entry function: {}", name.0.value);
+        println!("signature: {:?}", signature);
+        println!("attributes: {:?}", attributes);
+        println!("loc: {:?}", loc);
+        println!("visibility: {:?}", visibility);
+        println!("entry: {:?}", entry);
+
+        // println!("acquires: {:?}", acquires);
+        // println!("name: {:?}", name);
+        // println!("body: {:?}", body);
+        println!("===== end of entry function: {}", name.0.value)
+    }
+
     Ok(Function {
         attributes,
         loc,

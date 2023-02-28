@@ -999,6 +999,8 @@ impl<'a> Disassembler<'a> {
         } else {
             ""
         };
+        // println!("entry_modifier: {}", entry_modifier); -- not working
+
         let visibility_modifier = match function {
             Some(function) => match function.0.visibility {
                 Visibility::Private => {
