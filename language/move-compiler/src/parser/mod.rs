@@ -171,6 +171,8 @@ fn ensure_targets_deps_dont_intersect(
     ))
 }
 
+static mut DEPENDENCY_FILTER:bool = false;
+
 fn parse_file(
     compilation_env: &mut CompilationEnv,
     files: &mut FilesSourceText,
@@ -184,6 +186,7 @@ fn parse_file(
     let mut diags = Diagnostics::new();
     let mut f = File::open(fname.as_str())
         .map_err(|err| std::io::Error::new(err.kind(), format!("{}: {}", err, fname)))?;
+    print!("Processing: {} ", fname);
     let mut source_buffer = String::new();
     f.read_to_string(&mut source_buffer)?;
     let file_hash = FileHash::new(&source_buffer);

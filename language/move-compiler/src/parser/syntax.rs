@@ -1995,6 +1995,8 @@ fn parse_function_decl(
             println!("signature: {:?}", signature);
             println!("attributes: {:?}", attributes);
             println!("loc: {:?}", loc);
+            // let fpath = file_name_mapping.get(&loc.file_hash()).unwrap();
+            // println!("file: {:?}", fpath);
             println!("visibility: {:?}", visibility);
             println!("entry: {:?}", entry);
 
