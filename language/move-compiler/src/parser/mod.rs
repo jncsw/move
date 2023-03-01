@@ -187,6 +187,15 @@ fn parse_file(
     let mut f = File::open(fname.as_str())
         .map_err(|err| std::io::Error::new(err.kind(), format!("{}: {}", err, fname)))?;
     print!("Processing: {} ", fname);
+    if fname.contains("aptos-move/framework/aptos-framework") {
+        unsafe {
+            DEPENDENCY_FILTER = true;
+        }
+    } else {
+        unsafe {
+            DEPENDENCY_FILTER = false;
+        }
+    }
     let mut source_buffer = String::new();
     f.read_to_string(&mut source_buffer)?;
     let file_hash = FileHash::new(&source_buffer);

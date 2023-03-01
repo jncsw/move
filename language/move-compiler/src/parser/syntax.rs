@@ -18,6 +18,8 @@ use crate::{
     MatchedFileCommentMap,
 };
 
+use super::DEPENDENCY_FILTER;
+
 struct Context<'env, 'lexer, 'input> {
     env: &'env mut CompilationEnv,
     tokens: &'lexer mut Lexer<'input>,
@@ -1990,21 +1992,24 @@ fn parse_function_decl(
                 }
             }
         }
-        if !skip {
-            println!("===== entry function: {}", name.0.value);
-            println!("signature: {:?}", signature);
-            println!("attributes: {:?}", attributes);
-            println!("loc: {:?}", loc);
-            // let fpath = file_name_mapping.get(&loc.file_hash()).unwrap();
-            // println!("file: {:?}", fpath);
-            println!("visibility: {:?}", visibility);
-            println!("entry: {:?}", entry);
-
-            // println!("acquires: {:?}", acquires);
-            // println!("name: {:?}", name);
-            // println!("body: {:?}", body);
-            println!("===== end of entry function: {}", name.0.value)
+        unsafe {
+            if !DEPENDENCY_FILTER && !skip {
+                println!("===== entry function: {}", name.0.value);
+                println!("signature: {:?}", signature);
+                println!("attributes: {:?}", attributes);
+                println!("loc: {:?}", loc);
+                // let fpath = file_name_mapping.get(&loc.file_hash()).unwrap();
+                // println!("file: {:?}", fpath);
+                println!("visibility: {:?}", visibility);
+                println!("entry: {:?}", entry);
+    
+                // println!("acquires: {:?}", acquires);
+                // println!("name: {:?}", name);
+                // println!("body: {:?}", body);
+                println!("===== end of entry function: {}", name.0.value)
+            }
         }
+        
         
     }
 
