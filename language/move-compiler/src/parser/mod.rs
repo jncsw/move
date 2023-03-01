@@ -186,12 +186,13 @@ fn parse_file(
     let mut diags = Diagnostics::new();
     let mut f = File::open(fname.as_str())
         .map_err(|err| std::io::Error::new(err.kind(), format!("{}: {}", err, fname)))?;
-    print!("Processing: {} ", fname);
-    if fname.contains("aptos-move/framework/aptos-framework") {
+    
+    if fname.contains("aptos-move/framework/aptos-framework") || fname.contains(".move/https___github_com"){
         unsafe {
             DEPENDENCY_FILTER = true;
         }
     } else {
+        println!("Processing: {} ", fname);
         unsafe {
             DEPENDENCY_FILTER = false;
         }
