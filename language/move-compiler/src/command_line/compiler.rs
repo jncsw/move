@@ -217,6 +217,23 @@ impl<'a> Compiler<'a> {
         let mut compilation_env = CompilationEnv::new(flags);
         let (source_text, pprog_and_comments_res) =
             parse_program(&mut compilation_env, maps, targets, deps)?;
+        // dump entry functions
+        // if compilation_env.flags().dump_entry() {
+        //     let pprog = pprog_and_comments_res.as_ref().unwrap().0; 
+        //     let entry_functions = pprog
+        //         .source_definitions
+        //         .iter()
+        //         .filter_map(|m| {
+        //             if m.def {
+        //                 Some(m.name.value())
+        //             } else {
+        //                 None
+        //             }
+        //         })
+        //         .collect::<Vec<_>>();
+        //     println!("entry functions: {:?}", entry_functions);
+        // }
+
         let res: Result<_, Diagnostics> = pprog_and_comments_res.and_then(|(pprog, comments)| {
             SteppedCompiler::new_at_parser(compilation_env, pre_compiled_lib, pprog)
                 .run::<TARGET>()

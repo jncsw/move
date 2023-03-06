@@ -291,6 +291,13 @@ pub struct Flags {
     )]
     verify: bool,
 
+    /// Dump entry functions
+    #[clap(
+        short = cli::DUMP_ENTRY_FUNCTIONS_SHORT,
+        long = cli::DUMP_ENTRY_FUNCTIONS,
+        )]
+    dump_entry_function: bool,
+
     /// Compilation flavor.
     #[clap(
         long = cli::FLAVOR,
@@ -327,6 +334,7 @@ impl Flags {
             flavor: "".to_string(),
             bytecode_version: None,
             keep_testing_functions: false,
+            dump_entry_function: false,
         }
     }
 
@@ -338,6 +346,7 @@ impl Flags {
             flavor: "".to_string(),
             bytecode_version: None,
             keep_testing_functions: false,
+            dump_entry_function: false,
         }
     }
 
@@ -349,6 +358,7 @@ impl Flags {
             flavor: "".to_string(),
             bytecode_version: None,
             keep_testing_functions: false,
+            dump_entry_function: false,
         }
     }
 
@@ -379,6 +389,10 @@ impl Flags {
 
     pub fn is_testing(&self) -> bool {
         self.test
+    }
+
+    pub fn dump_entry(&self) -> bool {
+        self.dump_entry_function
     }
 
     pub fn keep_testing_functions(&self) -> bool {

@@ -101,6 +101,7 @@ default-members = [
 # Dependencies that should be kept in sync through the whole workspace
 [workspace.dependencies]
 bcs = "0.1.4"
+serde = "1.0.152"
 
 [profile.bench]
 debug = true

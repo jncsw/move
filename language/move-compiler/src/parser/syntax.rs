@@ -1993,7 +1993,7 @@ fn parse_function_decl(
             }
         }
         unsafe {
-            if !DEPENDENCY_FILTER && !skip {
+            if context.env.flags().dump_entry() && !DEPENDENCY_FILTER && !skip {
                 println!("===== entry function: {}", name.0.value);
                 println!("signature: {:?}", signature);
                 println!("attributes: {:?}", attributes);
@@ -2013,7 +2013,7 @@ fn parse_function_decl(
         
     }
 
-    Ok(Function {
+    let ret = Function {
         attributes,
         loc,
         visibility: visibility.unwrap_or(Visibility::Internal),
@@ -2022,7 +2022,11 @@ fn parse_function_decl(
         acquires,
         name,
         body,
-    })
+    };
+
+    Ok(ret)
+
+
 }
 
 // Parse a function parameter:

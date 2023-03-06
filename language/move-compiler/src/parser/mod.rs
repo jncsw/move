@@ -173,6 +173,7 @@ fn ensure_targets_deps_dont_intersect(
 
 static mut DEPENDENCY_FILTER:bool = false;
 
+
 fn parse_file(
     compilation_env: &mut CompilationEnv,
     files: &mut FilesSourceText,
