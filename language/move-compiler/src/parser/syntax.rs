@@ -1994,6 +1994,7 @@ fn parse_function_decl(
         }
         unsafe {
             if context.env.flags().dump_entry() && !DEPENDENCY_FILTER && !skip {
+                // println!("@@@test");
                 println!("===== entry function: {}", name.0.value);
                 println!("signature: {:?}", signature);
                 println!("attributes: {:?}", attributes);
@@ -2388,6 +2389,7 @@ fn parse_module(
             let addr = sp(n1_loc, addr_);
             consume_token(context.tokens, Tok::ColonColon)?;
             let name = parse_module_name(context)?;
+            println!("PARSED MODULE NAME: {:?} :: {:?}", addr, name);
             (Some(addr), name)
         }
         (LeadingNameAccess_::Name(name), _) => (None, ModuleName(name)),

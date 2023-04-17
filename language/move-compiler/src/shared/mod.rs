@@ -334,7 +334,7 @@ impl Flags {
             flavor: "".to_string(),
             bytecode_version: None,
             keep_testing_functions: false,
-            dump_entry_function: false,
+            dump_entry_function: true,
         }
     }
 
@@ -346,7 +346,7 @@ impl Flags {
             flavor: "".to_string(),
             bytecode_version: None,
             keep_testing_functions: false,
-            dump_entry_function: false,
+            dump_entry_function: true,
         }
     }
 
@@ -358,7 +358,7 @@ impl Flags {
             flavor: "".to_string(),
             bytecode_version: None,
             keep_testing_functions: false,
-            dump_entry_function: false,
+            dump_entry_function: true,
         }
     }
 
