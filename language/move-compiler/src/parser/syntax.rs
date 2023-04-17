@@ -1172,6 +1172,9 @@ fn parse_name_exp(context: &mut Context) -> Result<Exp_, Box<Diagnostic>> {
         context.tokens.advance()?;
         let is_macro = true;
         let rhs = parse_call_args(context)?;
+        if unsafe { !DEPENDENCY_FILTER } {
+            println!("=== parse_name_exp: {:?}, {:?}, {:?}, {:?}", &n, &is_macro, &tys, &rhs);
+        }
         return Ok(Exp_::Call(n, is_macro, tys, rhs));
     }
 
@@ -1906,6 +1909,57 @@ fn parse_function_decl(
     let name = FunctionName(parse_identifier(context)?);
     let type_parameters = parse_optional_type_parameters(context)?;
 
+    let mut dumped_function = false;
+    unsafe {
+
+        if entry.is_some() {
+            let mut skip = false;
+            if attributes.len() > 0 {
+                // println!("attributes: {:?}", attributes);
+                for attr in attributes.iter() {
+                    for att in attr.value.iter() {
+                        match att.value {
+                            Attribute_::Name(n) => {
+                                if n.value.as_str() == "test" || n.value.as_str() == "test_only" {
+                                    // println!("attribute: {:?}", att);
+                                    skip = true;
+                                }
+                            },
+                            Attribute_::Parameterized(n, _) => {
+                                if n.value.as_str() == "test"  {
+                                    // println!("attribute: {:?}", att);
+                                    skip = true;
+                                }
+                            }
+                            _ => {}
+                        }
+                    }
+                }
+            }
+            unsafe {
+                if context.env.flags().dump_entry() && !DEPENDENCY_FILTER && !skip {
+                    // println!("@@@test");
+                    dumped_function = true;
+                    println!("===== entry function: {}", name.0.value);
+                    
+                    println!("attributes: {:?}", attributes);
+                    // let fpath = file_name_mapping.get(&loc.file_hash()).unwrap();
+                    // println!("file: {:?}", fpath);
+                    println!("visibility: {:?}", visibility);
+                    println!("entry: {:?}", entry);
+        
+                    // println!("acquires: {:?}", acquires);
+                    // println!("name: {:?}", name);
+                    // println!("body: {:?}", body);
+                    
+                }
+            }
+            
+            
+        }
+       
+    }
+
     // "(" Comma<Parameter> ")"
     let parameters = parse_comma_list(
         context,
@@ -1968,50 +2022,12 @@ fn parse_function_decl(
         start_loc,
         context.tokens.previous_end_loc(),
     );
-    if entry.is_some() {
-        let mut skip = false;
-        if attributes.len() > 0 {
-            // println!("attributes: {:?}", attributes);
-            for attr in attributes.iter() {
-                for att in attr.value.iter() {
-                    match att.value {
-                        Attribute_::Name(n) => {
-                            if n.value.as_str() == "test" || n.value.as_str() == "test_only" {
-                                // println!("attribute: {:?}", att);
-                                skip = true;
-                            }
-                        },
-                        Attribute_::Parameterized(n, _) => {
-                            if n.value.as_str() == "test"  {
-                                // println!("attribute: {:?}", att);
-                                skip = true;
-                            }
-                        }
-                        _ => {}
-                    }
-                }
-            }
-        }
-        unsafe {
-            if context.env.flags().dump_entry() && !DEPENDENCY_FILTER && !skip {
-                // println!("@@@test");
-                println!("===== entry function: {}", name.0.value);
-                println!("signature: {:?}", signature);
-                println!("attributes: {:?}", attributes);
-                println!("loc: {:?}", loc);
-                // let fpath = file_name_mapping.get(&loc.file_hash()).unwrap();
-                // println!("file: {:?}", fpath);
-                println!("visibility: {:?}", visibility);
-                println!("entry: {:?}", entry);
-    
-                // println!("acquires: {:?}", acquires);
-                // println!("name: {:?}", name);
-                // println!("body: {:?}", body);
-                println!("===== end of entry function: {}", name.0.value)
-            }
-        }
-        
-        
+
+    if dumped_function {
+        println!("signature: {:?}", signature);
+        println!("loc: {:?}", loc);
+
+        println!("===== end of entry function: {}", name.0.value)
     }
 
     let ret = Function {
@@ -2024,6 +2040,8 @@ fn parse_function_decl(
         name,
         body,
     };
+
+    
 
     Ok(ret)
 
@@ -2788,6 +2806,8 @@ fn parse_condition(context: &mut Context) -> Result<SpecBlockMember, Box<Diagnos
         vec![]
     };
     let end_loc = context.tokens.previous_end_loc();
+    // spec block
+    // println!("parsed condition: {:?}, {:?}, {:?}, {:?}", &kind, &properties, &exp, &additional_exps);
     Ok(spanned(
         context.tokens.file_hash(),
         start_loc,
