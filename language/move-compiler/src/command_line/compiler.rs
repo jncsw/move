@@ -15,6 +15,7 @@ use crate::{
         NumericalAddress, PackagePaths,
     },
     to_bytecode, typing, unit_test, verification,
+    vmove,
 };
 use move_command_line_common::files::{
     extension_equals, find_filenames, MOVE_COMPILED_EXTENSION, MOVE_EXTENSION, SOURCE_MAP_EXTENSION,
@@ -773,6 +774,7 @@ fn run(
             let prog = unit_test::filter_test_members::program(compilation_env, prog);
             let prog = verification::ast_filter::program(compilation_env, prog);
             let eprog = expansion::translate::program(compilation_env, pre_compiled_lib, prog);
+            let eprog = vmove::assertions_extract::program(compilation_env, pre_compiled_lib, eprog);
             compilation_env.check_diags_at_or_above_severity(Severity::Bug)?;
             run(
                 compilation_env,

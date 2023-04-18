@@ -342,6 +342,10 @@ pub fn program(
     } = prog;
     let modules = modules(&mut context, emodules);
     let scripts = scripts(&mut context, escripts);
+
+    // println!("Modules: {:#?}", modules);
+    // println!("Scripts: {:#?}", scripts);
+
     N::Program { modules, scripts }
 }
 

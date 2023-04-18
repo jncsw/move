@@ -193,6 +193,9 @@ pub fn program(
     let modules = modules(&mut context, tmodules);
     let scripts = scripts(&mut context, tscripts);
 
+    // println!("Modules: {:#?}", modules);
+    // println!("Scripts: {:#?}", scripts);
+
     H::Program { modules, scripts }
 }
 

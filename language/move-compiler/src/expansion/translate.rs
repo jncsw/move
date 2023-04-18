@@ -212,6 +212,10 @@ pub fn program(
     };
 
     super::dependency_ordering::verify(context.env, &mut module_map, &mut scripts);
+
+    // println!("Modules: {:#?}", module_map);
+    // println!("Scripts: {:#?}", scripts);
+
     E::Program {
         modules: module_map,
         scripts,

@@ -23,6 +23,7 @@ mod to_bytecode;
 pub mod typing;
 pub mod unit_test;
 pub mod verification;
+pub mod vmove;
 
 pub use command_line::{
     compiler::{

@@ -3288,6 +3288,7 @@ fn parse_file(context: &mut Context) -> Result<Vec<Definition>, Box<Diagnostic>>
             _ => Definition::Address(parse_address_block(attributes, context)?),
         })
     }
+    // println!("Parsed file: {:#?}", defs);
     Ok(defs)
 }
 
